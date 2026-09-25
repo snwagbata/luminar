@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_toggle_label">Lights on/off</string>
+    <string name="widget_toggle_description">Turn all your lights on or off</string>
+    <string name="widget_presets_label">Lights and presets</string>
+    <string name="widget_presets_description">Turn all lights on or off, or pick a preset</string>
+    <string name="widget_toggle_a11y">Toggle all lights</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The app's dark palette (lib/ui/core/theme.dart). -->
+<resources>
+    <color name="widget_bar">#FF182033</color>
+    <color name="widget_surface">#FF212B42</color>
+    <color name="widget_idle">#FF34405C</color>
+    <color name="widget_text">#FFEDE8DF</color>
+    <color name="widget_muted">#FF9AA3B5</color>
+    <color name="widget_glow">#FFFFD6AA</color>
+    <color name="widget_on_text">#FF1C2436</color>
+</resources>

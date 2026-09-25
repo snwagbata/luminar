@@ -1,0 +1,56 @@
+{
+ "net": {
+  "nid": 30,
+  "encKey": "eaa68445ffa4f38f96f2ccc5cc16119c",
+  "privKey": "33f2dddefd05965a2ff862ddcbf8298c",
+  "networkId": "1fbd2c61a4b6e5a4",
+  "aid": 39
+ },
+ "appAccess": [
+  {
+   "seq": 1000,
+   "transport": "679fb140e64e6eb8c289b9606285"
+  }
+ ],
+ "appNet": "1e3c1617a72661a23992c17233b148f8c185139b0f88bc7aa7bf8b",
+ "devSeg": [
+  {
+   "seq": 5000,
+   "transport": "804e2001b861daa7a4c36417344d3042"
+  },
+  {
+   "seq": 5001,
+   "transport": "804e20212d85bd2a6cc1cf57ec52c9a4"
+  }
+ ],
+ "devSegResend": [
+  {
+   "seq": 5002,
+   "transport": "804e2001b861daa7a4c36417344d3042"
+  },
+  {
+   "seq": 5003,
+   "transport": "804e20212d85bd2a6cc1cf57ec52c9a4"
+  }
+ ],
+ "devSegNet": [
+  "1e74f2657b91e95cc40233419ad8b3bcf6c278bea990f46e8ceede63ea",
+  "1eac31c6846b6d358cd8e55e4ee1dbb4e88802ede246ae65d50e865096"
+ ],
+ "proxyCfg": "1e98d484427240338d34762b46c4a7483703a6",
+ "prov": {
+  "salt": "083b9ea16e22029766e297c29765d01c",
+  "key": "ed59f118252745625788d929b8e2632b",
+  "conf": "aec61d5d37e092576527bda45378eb65",
+  "sessionKey": "c2ad29f135f291e36cbfd772abbc0efb",
+  "nonce": "6338f82d7db402faa018ca93d2",
+  "devKey": "8d2e19c90d091542738b436757fdfa2b",
+  "data": "8549a58a84aa7f16c32ae29bd719ae44c7dedc0ebf65a371a6a206f4ee5ce41c9a"
+ },
+ "chunks": [
+  "4303555555555555555555555555555555555555",
+  "8355555555555555555555555555555555555555",
+  "8355555555555555555555555555555555555555",
+  "c35555555555555555"
+ ]
+}

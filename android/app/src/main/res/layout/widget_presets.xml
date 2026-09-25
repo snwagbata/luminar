@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bar_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="6dp">
+
+    <LinearLayout
+        android:id="@+id/toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_off_bg"
+        android:contentDescription="@string/widget_toggle_a11y"
+        android:gravity="center"
+        android:minWidth="56dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp">
+
+        <ImageView
+            android:id="@+id/toggle_icon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/widget_bulb" />
+
+        <TextView
+            android:id="@+id/toggle_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Off"
+            android:textColor="@color/widget_text"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView android:id="@+id/preset_relax" style="@style/WidgetChip" android:text="Relax" />
+    <TextView android:id="@+id/preset_read" style="@style/WidgetChip" android:text="Read" />
+    <TextView android:id="@+id/preset_daylight" style="@style/WidgetChip" android:text="Daylight" />
+    <TextView android:id="@+id/preset_night" style="@style/WidgetChip" android:text="Night" />
+</LinearLayout>

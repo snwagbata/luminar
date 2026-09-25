@@ -1,0 +1,25 @@
+# Static analysis for Luminar. See the dart-run-static-analysis skill.
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    always_declare_return_types: true
+    avoid_dynamic_calls: true
+    unawaited_futures: true
+    cancel_subscriptions: true
+    close_sinks: true
+    use_super_parameters: true
+
+formatter:
+  page_width: 100
