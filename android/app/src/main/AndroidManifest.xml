@@ -37,7 +37,18 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
+        <!-- App shortcuts run here: no UI, closes at once. Not exported; the
+             launcher starts shortcuts on Luminar's behalf. -->
+        <activity
+            android:name=".ShortcutActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Home-screen widgets (LuminarWidgets.kt). -->
         <receiver android:name=".LightsToggleWidget"
             android:exported="true"

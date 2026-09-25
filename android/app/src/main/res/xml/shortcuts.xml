@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Long-press shortcuts on the app icon. Each runs the same luminar://
+     action as the home-screen widgets, silently (ShortcutActivity). -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_toggle"
+        android:shortcutId="toggle"
+        android:shortcutLongLabel="@string/shortcut_toggle_long"
+        android:shortcutShortLabel="@string/shortcut_toggle_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="luminar://toggle"
+            android:targetClass="app.luminar.luminar.ShortcutActivity"
+            android:targetPackage="app.luminar.luminar" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_relax"
+        android:shortcutId="relax"
+        android:shortcutLongLabel="@string/shortcut_relax_long"
+        android:shortcutShortLabel="@string/shortcut_relax_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="luminar://preset?name=Relax"
+            android:targetClass="app.luminar.luminar.ShortcutActivity"
+            android:targetPackage="app.luminar.luminar" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_read"
+        android:shortcutId="read"
+        android:shortcutLongLabel="@string/shortcut_read_long"
+        android:shortcutShortLabel="@string/shortcut_read_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="luminar://preset?name=Read"
+            android:targetClass="app.luminar.luminar.ShortcutActivity"
+            android:targetPackage="app.luminar.luminar" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_daylight"
+        android:shortcutId="daylight"
+        android:shortcutLongLabel="@string/shortcut_daylight_long"
+        android:shortcutShortLabel="@string/shortcut_daylight_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="luminar://preset?name=Daylight"
+            android:targetClass="app.luminar.luminar.ShortcutActivity"
+            android:targetPackage="app.luminar.luminar" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_night"
+        android:shortcutId="night"
+        android:shortcutLongLabel="@string/shortcut_night_long"
+        android:shortcutShortLabel="@string/shortcut_night_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="luminar://preset?name=Night"
+            android:targetClass="app.luminar.luminar.ShortcutActivity"
+            android:targetPackage="app.luminar.luminar" />
+    </shortcut>
+</shortcuts>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_toggle_short">Lights on/off</string>
+    <string name="shortcut_toggle_long">All lights on/off</string>
+    <string name="shortcut_relax_short">Relax</string>
+    <string name="shortcut_relax_long">Relax</string>
+    <string name="shortcut_read_short">Read</string>
+    <string name="shortcut_read_long">Read</string>
+    <string name="shortcut_daylight_short">Daylight</string>
+    <string name="shortcut_daylight_long">Daylight</string>
+    <string name="shortcut_night_short">Night</string>
+    <string name="shortcut_night_long">Night</string>
+</resources>

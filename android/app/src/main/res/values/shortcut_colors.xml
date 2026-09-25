@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shortcut icon backgrounds: each preset's light colour. -->
+<resources>
+    <color name="shortcut_toggle">#FF212B42</color>
+    <color name="shortcut_relax">#FFFFB46B</color>
+    <color name="shortcut_read">#FFFFD6AA</color>
+    <color name="shortcut_daylight">#FFEEF1FF</color>
+    <color name="shortcut_night">#FF6B4A2E</color>
+    <color name="shortcut_glyph_dark">#FF1C2436</color>
+    <color name="shortcut_glyph_light">#FFEDE8DF</color>
+</resources>
