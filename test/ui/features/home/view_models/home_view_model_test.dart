@@ -33,7 +33,10 @@ void main() {
     await settle();
 
     final l = h.vm.lights.single;
-    // The simulated bulb reports a nonzero lightness, which means on.
+    // The simulated bulb starts off, though (like the Sengled bulbs) it
+    // reports a nonzero lightness.
+    expect(h.vm.statusLine(l), 'Off');
+    await h.vm.setPower(l, true);
     expect(h.vm.statusLine(l), 'On, 46%, 3000 K');
     await h.vm.setPower(l, false);
     expect(h.vm.statusLine(l), 'Off');
