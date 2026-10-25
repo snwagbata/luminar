@@ -86,7 +86,7 @@ Layered as the Flutter architecture guide recommends: views and view models (MVV
 | `lib/ui/features/` | One folder per feature (`home`, `add_light`, `activity_log`), each with `view_models/` and `views/`. View models own the user-facing messages; repositories return typed results. |
 | `lib/ui/core/` | Theme and shared widgets. |
 | `lib/config/dependencies.dart` | The object graph, provided to the widget tree with `provider`. Tests build the same graph over simulated bulbs. |
-| `test/` | Mirrors `lib/`. Spec vectors and cross-checks against the verified JS core, Node's ECDH and Silvair's Python library; repository and view model tests against simulated bulbs that relay over a simulated mesh (`test/support/mock_bulb.dart`, `test/support/harness.dart`). |
+| `test/` | Mirrors `lib/`. Mesh protocol tests check against independent sources, named in each test file's header. Repository and view model tests run against simulated bulbs that relay over a simulated mesh (`test/support/mock_bulb.dart`, `test/support/harness.dart`). |
 
 After changing a `freezed` model, regenerate with `dart run build_runner build --delete-conflicting-outputs`.
 
