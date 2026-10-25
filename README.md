@@ -31,7 +31,7 @@ The original handoff, the Lamplight web app and its JS mesh core live in a local
 
 2. Copy `build/app/outputs/flutter-apk/app-release.apk` to the phone and open it. Allow installs from that source when Android asks.
 
-   Without an upload key, the APK is signed with the debug key. That's fine for installing it yourself. To publish on Play, see [Release (Android)](#release-android).
+   The APK is signed with the debug key, which is fine for installing it on your own phone.
 
 3. Open Luminar and allow **Nearby devices** when asked.
 
@@ -122,58 +122,9 @@ The bulbs don't expose a Time Server, and the Scheduler needs one to know the cu
 | Sharing backup codes and logs | `share_plus` | |
 | Fonts | `google_fonts` | Figtree and Bricolage Grotesque are bundled in `google_fonts/`, so the app never fetches fonts at runtime. |
 
-## Release (Android)
+## Privacy
 
-### One-time: create the upload key
-
-Choose your own password when `keytool` asks for one. Keep the `.jks` file and its password somewhere safe, such as a password manager and an offline backup. Play needs this key for every future update.
-
-```bash
-keytool -genkeypair -v -keystore ~/luminar-upload.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
-```
-
-Then create `android/key.properties`. It's git-ignored.
-
-```properties
-storeFile=/Users/you/luminar-upload.jks
-storePassword=…
-keyAlias=upload
-keyPassword=…
-```
-
-Without this file, release builds are signed with the debug key. They install on a phone for testing, but Play rejects them.
-
-### Build
-
-1. Bump `version:` in `pubspec.yaml`. The part after `+` is the Play version code and must go up with every upload.
-2. Build the bundle:
-
-   ```bash
-   flutter build appbundle --release
-   ```
-
-3. Upload `build/app/outputs/bundle/release/app-release.aab` in the Play Console.
-
-### Icon and splash
-
-They're rendered by `tool/brand/render_brand_assets.dart` into `assets/brand/`, then generated for each platform:
-
-```bash
-flutter test tool/brand/render_brand_assets.dart
-```
-
-```bash
-dart run flutter_launcher_icons
-```
-
-```bash
-dart run flutter_native_splash:create
-```
-
-### Play listing notes
-
-- **Permissions:** Nearby devices (Bluetooth scan and connect, never used for location). Android 11 and lower also need location for scanning. There's no internet permission in release builds.
-- **Data safety:** no data is collected or shared. Network keys and the light list stay in the Android keystore on the phone. Backup codes leave the phone only when you share one.
+Luminar collects nothing and shares nothing. Release builds have no internet permission. The network keys and the light list stay in the Android keystore on your phone, and a backup code leaves the phone only when you share it. Luminar asks for **Nearby devices** to scan for and connect to bulbs, and never uses it for location. Android 11 and lower also need the location permission to scan for Bluetooth devices.
 
 ## Development
 
@@ -189,4 +140,28 @@ To regenerate the README screenshots in `docs/screenshots/`, run the app against
 flutter test tool/screenshots/take_screenshots.dart
 ```
 
+### Icon and splash
+
+`tool/brand/render_brand_assets.dart` renders them into `assets/brand/`. To regenerate them for each platform, run these commands in order:
+
+```bash
+flutter test tool/brand/render_brand_assets.dart
+```
+
+```bash
+dart run flutter_launcher_icons
+```
+
+```bash
+dart run flutter_native_splash:create
+```
+
+### Android SDK
+
 `compileSdk` is 37 because `permission_handler` and `flutter_reactive_ble` require it. `targetSdk` follows Flutter's default.
+
+## License
+
+Luminar is released under the [MIT License](LICENSE).
+
+The bundled Figtree and Bricolage Grotesque fonts are licensed under the SIL Open Font License; their license files are in `google_fonts/`. The bulb and power icons are from Material Icons, licensed under the Apache License 2.0.
