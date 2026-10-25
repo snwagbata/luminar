@@ -50,7 +50,6 @@ abstract class Light with _$Light {
   bool get usable => configured && !wasReset;
   bool get hasCtl => has('ctl');
   bool get hasLightness => has('lightness');
-  bool get hasOnOff => has('onoff');
 
   /// Whether every groupable model this light has is in [allLightsGroup].
   bool get grouped => groupable.every((k) => !has(k) || groupModels.contains(k));

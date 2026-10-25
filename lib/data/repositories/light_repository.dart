@@ -419,11 +419,6 @@ class LightRepository extends ChangeNotifier {
     return r == null ? null : CtlDefault.parse(r);
   }
 
-  Future<RangeStatus?> lightnessRange(int addr) async {
-    final r = await _proxy.request(addr, Msg.lightnessRangeGet(), Op.lightnessRangeStatus);
-    return r == null ? null : RangeStatus.parse(r, Op.lightnessRangeStatus);
-  }
-
   /// Schedule slots (0–15) in use on the light.
   Future<List<int>?> schedules(int addr) async {
     final r = await _proxy.request(addr, Msg.schedulerGet(), Op.schedulerStatus);

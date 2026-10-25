@@ -19,9 +19,9 @@ Luminar is tested on Android. It also builds for iOS, with the Bluetooth permiss
 - **Reset detection:** a bulb reset with its light switch shows **Was reset**, and **Set up again** keeps its name and place in the list.
 - **Android widgets and app shortcuts:** switch lights or pick a preset from the home screen without opening the app.
 - **Fast reconnect:** Luminar connects to your lights in about 4 seconds when it opens.
-- **Backups:** a backup code restores your lights on another phone, or in the Lamplight web app.
+- **Backups:** a backup code restores your lights on another phone.
 
-The crypto tests also check Luminar against vectors from the Lamplight web app's JavaScript mesh core. `test/support/js_vectors.mjs` generated them into `test/support/js_vectors.json`. The JavaScript core isn't in this repository, and the tests don't need it.
+The crypto tests also check Luminar against vectors from the JavaScript mesh core of Lamplight, an earlier web app for these bulbs that isn't published. `test/support/js_vectors.mjs` generated them into `test/support/js_vectors.json`. The JavaScript core isn't in this repository, and the tests don't need it.
 
 ## Install on an Android phone
 
@@ -73,7 +73,7 @@ Force-stopping Luminar in Android settings turns its widgets off until you open 
 
 ## Backups
 
-**Back up lights** produces a `LAMPLIGHT1:` code that also works in the Lamplight web app. Restoring adds 100,000 to the sequence number so bulbs don't reject messages as replays.
+**Back up lights** produces a `LAMPLIGHT1:` code. Luminar also reads backup codes from the Lamplight web app. Restoring adds 100,000 to the sequence number so bulbs don't reject messages as replays.
 
 ## Architecture
 
@@ -114,7 +114,7 @@ The bulbs don't expose a Time Server, and the Scheduler needs one to know the cu
 | Need | Choice | Notes |
 |---|---|---|
 | BLE | `flutter_reactive_ble` | BSD license and actively maintained. We didn't use `flutter_blue_plus` 2.x because of its non-BSD license and build-time telemetry ping. |
-| Mesh protocol | Own pure Dart (`lib/data/mesh/`) | We didn't use `nrf_mesh_flutter`. It's 5 months old, has one maintainer, has gone through 6 major versions, and has an open provisioning bug. Its Android side also depends on an alpha Nordic BLE library. It would also hide the PDU-level logging that real-bulb debugging needs. |
+| Mesh protocol | Own pure Dart (`lib/data/mesh/`) | We didn't use `nrf_mesh_flutter`. When Luminar started in September 2026, it was 5 months old, had one maintainer, had gone through 6 major versions, and had an open provisioning bug. Its Android side also depends on an alpha Nordic BLE library. It would also hide the PDU-level logging that real-bulb debugging needs. |
 | AES, CMAC, CCM, ECDH P-256 | `pointycastle` | The mesh key derivation functions are built on top of it. |
 | Slider throttling | `dart_debounce_throttle` (`ThrottleDebouncer`) | |
 | Immutable models | `freezed` | `copyWith`, equality and unmodifiable collections. JSON stays hand-written with pattern matching, to keep the web app's backup format exact. |
