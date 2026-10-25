@@ -1,6 +1,23 @@
 # Luminar
 
-Luminar is an Android app (iOS later) that sets up and controls Sengled Dual Mode Bluetooth Mesh bulbs without Sengled's apps or nRF Mesh. It creates its own mesh network, adds bulbs to it, and controls on/off, brightness, color temperature, and scenes.
+Luminar is an Android app that sets up and controls Sengled Dual Mode Bluetooth Mesh bulbs without Sengled's apps or nRF Mesh. It creates its own mesh network, adds bulbs to it, and controls on/off, brightness, color temperature, and scenes.
+
+<p>
+  <img src="docs/screenshots/home-light.png" width="250" alt="The home screen: a lamp button showing 2 of 3 lights on, brightness and warmth sliders, presets, and saved scenes.">
+  <img src="docs/screenshots/lights-dark.png" width="250" alt="The light list in dark mode, with the desk lamp opened to show its own sliders and actions.">
+  <img src="docs/screenshots/add-light-light.png" width="250" alt="The Add a light sheet, listing two reset bulbs ready to add with their signal strength.">
+</p>
+
+## Features
+
+- **Setup without other apps:** Luminar adds a reset bulb to its own network in about 10 seconds.
+- **All lights at once:** the lamp button, sliders, presets, and scenes reach every bulb in one group message, so they change together.
+- **Each light on its own:** on/off, brightness, warmth, rename, remove, and a power-on default.
+- **Scenes:** save the current look of every light and bring it back with one tap.
+- **Reset detection:** a bulb reset with its light switch shows **Was reset**, and **Set up again** keeps its name and place in the list.
+- **Android widgets and app shortcuts:** switch lights or pick a preset from the home screen without opening the app.
+- **Fast reconnect:** Luminar connects to your lights in about 4 seconds when it opens.
+- **Backups:** a backup code restores your lights on another phone, or in the Lamplight web app.
 
 The original handoff, the Lamplight web app and its JS mesh core live in a local `reference/` folder that isn't in this repository. `test/support/js_vectors.json` holds the vectors generated from that core, so the tests don't need it.
 
@@ -12,7 +29,9 @@ The original handoff, the Lamplight web app and its JS mesh core live in a local
    flutter build apk --release
    ```
 
-2. Copy `build/app/outputs/flutter-apk/app-release.apk` to the phone and open it. Allow installs from that source when Android asks. The APK is signed with the debug key, which is fine for personal sideloading.
+2. Copy `build/app/outputs/flutter-apk/app-release.apk` to the phone and open it. Allow installs from that source when Android asks.
+
+   Without an upload key, the APK is signed with the debug key. That's fine for installing it yourself. To publish on Play, see [Release (Android)](#release-android).
 
 3. Open Luminar and allow **Nearby devices** when asked.
 
@@ -21,22 +40,34 @@ The original handoff, the Lamplight web app and its JS mesh core live in a local
 1. Reset the bulb: with it on, turn it off and on five times quickly until it flashes.
 2. Tap **Add a light** and pick the bulb (`BLE Bulb_XXXX`). The bulb blinks while Luminar sets it up.
 
-A bulb that's still in another network (for example, BLE Bulb_ACF1 in nRF Mesh) doesn't appear under **Add a light**. If Luminar connects to one, it tells you to reset it.
+A bulb that's still in another network, such as one set up with nRF Mesh, doesn't appear under **Add a light**. If Luminar connects to one, it tells you to reset it.
+
+### Bulbs reset outside the app
+
+Luminar recognizes your bulbs by their Bluetooth address. When one of them advertises as a new bulb, Luminar marks its light **Was reset**. Tap **Set up again** to add it back with the same name and place in the list. **Add a light** also labels a reset bulb with the light it used to be.
 
 ## Debugging with real bulbs
 
 **Activity log** (at the bottom of the main screen) shows every provisioning and network PDU in both directions, plus decoded access messages. Use **Share** to send it somewhere. The bulb's Composition Data is logged when it's configured.
 
-## Home-screen widgets (Android)
+## Widgets and app shortcuts (Android)
+
+Luminar offers two home-screen widgets:
 
 - **Lights on/off** (1×1) toggles every light.
-- **Lights and presets** (4×1) adds Relax, Read, Daylight and Night.
+- **Lights and presets** (4×1) adds Relax, Read, Daylight, and Night.
+
+Long-press the app icon for the same actions as app shortcuts. You can drag a shortcut onto the home screen as its own icon. Some launchers show only four shortcuts, so Night appears only when you add it to the home screen.
+
+Widgets and shortcuts run their action without opening the app.
 
 A tap runs `lib/widget_entry.dart` in a background isolate (`home_widget`):
 - If Luminar is running, the tap is handed to it over the isolate name server and uses its open connection. That takes about 0.1 s.
 - Otherwise the isolate connects, sends one group message and disconnects. That takes about 5–6 s, most of it Android starting the process and opening the Bluetooth link.
 
-The widget shows "…" while it works and "Retry" if no light was in range. The native side is `android/app/src/main/kotlin/app/luminar/luminar/LuminarWidgets.kt`.
+The widget shows **…** while it works and **Retry** if no light was in range. The native side is `LuminarWidgets.kt` and `ShortcutActivity.kt` in `android/app/src/main/kotlin/app/luminar/luminar/`. Shortcuts are declared in `android/app/src/main/res/xml/shortcuts.xml`.
+
+Force-stopping Luminar in Android settings turns its widgets off until you open the app again. That's an Android rule for force-stopped apps.
 
 ## Backups
 
@@ -49,10 +80,11 @@ Layered as the Flutter architecture guide recommends: views and view models (MVV
 | Path | What it does |
 |---|---|
 | `lib/data/mesh/` | Pure Dart Bluetooth Mesh protocol: key derivation (s1, k1–k4), network PDUs with obfuscation, segmentation and reassembly, proxy SAR, provisioning math, and access messages for every SIG model the bulbs expose. |
-| `lib/data/services/` | Stateless-ish wrappers around the outside world. `BleService` (with the `flutter_reactive_ble` implementation) scans and opens GATT links. `MeshProxyService` is the proxy connection: network and transport layers, request/reply matching, segment acks, group sends. `ProvisioningService` runs PB-GATT. `HomeStore` persists the home in the keystore. `ActivityLog` records every PDU. |
-| `lib/data/repositories/` | The single sources of truth. `HomeRepository` (keys, lights, scene names, SEQ), `ConnectionRepository` (finding our proxy, connecting), `LightRepository` (configuration, the All lights group, control, CTL setup, scheduler, what the lights report), `SceneRepository`, `ProvisioningRepository` (scanning for and provisioning new bulbs). |
-| `lib/domain/models/` | Immutable models (`freezed`): `Home`, `Light`, `LightState`, `Preset`, `NearbyBulb`. |
-| `lib/domain/use_cases/` | `AddLightUseCase` (provision, reconnect as proxy, configure) and `ConnectUseCase` (connect, then finish setups and sync states). |
+| `lib/data/services/` | Wrappers around the outside world. `BleService` (with the `flutter_reactive_ble` implementation) scans and opens GATT links. `MeshProxyService` is the proxy connection: network and transport layers, request/reply matching, segment acks, group sends. `ProvisioningService` runs PB-GATT. `HomeStore` persists the home in the keystore. `HomeWidgetService` draws the widgets. `ActivityLog` records every PDU. |
+| `lib/data/repositories/` | The single sources of truth. `HomeRepository` (keys, lights, scene names, SEQ), `ConnectionRepository` (finding our proxy, connecting, noticing reset bulbs), `LightRepository` (configuration, the All lights group, control, CTL setup, scheduler, what the lights report), `SceneRepository`, `ProvisioningRepository` (scanning for and provisioning new bulbs), `WidgetRepository` (widget state, and taps passed between isolates). |
+| `lib/domain/models/` | Immutable models (`freezed`): `Home`, `Light`, `LightState`, plus `Preset`, `NearbyBulb`, and `WidgetAction`. |
+| `lib/domain/use_cases/` | `AddLightUseCase` (provision, reconnect as proxy, configure), `ConnectUseCase` (connect, then finish setups and sync states), and `WidgetActionUseCase` (a widget tap while the app isn't running). |
+| `lib/widget_entry.dart` | The background entry point for widget and shortcut taps. |
 | `lib/ui/features/` | One folder per feature (`home`, `add_light`, `activity_log`), each with `view_models/` and `views/`. View models own the user-facing messages; repositories return typed results. |
 | `lib/ui/core/` | Theme and shared widgets. |
 | `lib/config/dependencies.dart` | The object graph, provided to the widget tree with `provider`. Tests build the same graph over simulated bulbs. |
@@ -145,14 +177,16 @@ dart run flutter_native_splash:create
 
 ## Development
 
+Run the tests:
+
 ```bash
 flutter test
 ```
 
-```bash
-SCREENSHOTS=1 flutter test test/ui/features/home/views/home_screen_test.dart
-```
+To regenerate the README screenshots in `docs/screenshots/`, run the app against simulated bulbs:
 
-The second command also writes screenshots to `build/screens/`.
+```bash
+flutter test tool/screenshots/take_screenshots.dart
+```
 
 `compileSdk` is 37 because `permission_handler` and `flutter_reactive_ble` require it. `targetSdk` follows Flutter's default.
