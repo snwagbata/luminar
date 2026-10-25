@@ -1,3 +1,7 @@
+// Generated test/support/js_vectors.json from the Lamplight web app's
+// JavaScript mesh core, which isn't in this repository. To run it again,
+// put that core at reference/mesh-core.js:
+//   node test/support/js_vectors.mjs > test/support/js_vectors.json
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const M = require('../../reference/mesh-core.js');

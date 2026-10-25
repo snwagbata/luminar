@@ -21,7 +21,7 @@ Luminar is built and tested on Android. The Flutter code and the iOS project are
 - **Fast reconnect:** Luminar connects to your lights in about 4 seconds when it opens.
 - **Backups:** a backup code restores your lights on another phone, or in the Lamplight web app.
 
-The original handoff, the Lamplight web app and its JS mesh core live in a local `reference/` folder that isn't in this repository. `test/support/js_vectors.json` holds the vectors generated from that core, so the tests don't need it.
+The crypto tests also check Luminar against vectors from the Lamplight web app's JavaScript mesh core. `test/support/js_vectors.mjs` generated them into `test/support/js_vectors.json`. The JavaScript core isn't in this repository, and the tests don't need it.
 
 ## Install on an Android phone
 
