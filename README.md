@@ -1,6 +1,8 @@
 # Luminar
 
-Luminar is an Android app that sets up and controls Sengled Dual Mode Bluetooth Mesh bulbs without Sengled's apps or nRF Mesh. It creates its own mesh network, adds bulbs to it, and controls on/off, brightness, color temperature, and scenes.
+Luminar is a Flutter app that sets up and controls Sengled Dual Mode Bluetooth Mesh bulbs without Sengled's apps or nRF Mesh. It creates its own mesh network, adds bulbs to it, and controls on/off, brightness, color temperature, and scenes.
+
+Luminar is built and tested on Android. The Flutter code and the iOS project are in place, including the Bluetooth permission text, app icon, and splash screen, but the iOS app hasn't been built or tested on an iPhone yet. Home-screen widgets and app shortcuts are Android-only.
 
 <p>
   <img src="docs/screenshots/home-light.png" width="250" alt="The home screen: a lamp button showing 2 of 3 lights on, brightness and warmth sliders, presets, and saved scenes.">
@@ -21,7 +23,7 @@ Luminar is an Android app that sets up and controls Sengled Dual Mode Bluetooth 
 
 The original handoff, the Lamplight web app and its JS mesh core live in a local `reference/` folder that isn't in this repository. `test/support/js_vectors.json` holds the vectors generated from that core, so the tests don't need it.
 
-## Install on your phone
+## Install on an Android phone
 
 1. Build the APK:
 
