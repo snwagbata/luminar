@@ -1,5 +1,7 @@
 # Luminar
 
+[![CI](https://github.com/snwagbata/luminar/actions/workflows/ci.yml/badge.svg)](https://github.com/snwagbata/luminar/actions/workflows/ci.yml)
+
 Luminar is a Flutter app that sets up and controls Sengled Dual Mode Bluetooth Mesh bulbs without Sengled's apps or nRF Mesh. It creates its own mesh network, adds bulbs to it, and controls on/off, brightness, color temperature, and scenes.
 
 Luminar is tested on Android. It also builds for iOS, with the Bluetooth permission text, app icon, and splash screen, but the iOS app hasn't been run on an iPhone yet. Home-screen widgets and app shortcuts are Android-only.
@@ -154,3 +156,5 @@ To run it on an iPhone, open `ios/Runner.xcworkspace` in Xcode and choose your t
 Luminar is released under the [MIT License](LICENSE).
 
 The bundled Figtree and Bricolage Grotesque fonts are licensed under the SIL Open Font License; their license files are in `google_fonts/`. The bulb and power icons are from Material Icons, licensed under the Apache License 2.0.
+
+Luminar is an independent project. It isn't affiliated with or endorsed by Sengled. Sengled is a trademark of its owner, and the name is used here only to say which bulbs Luminar works with.
