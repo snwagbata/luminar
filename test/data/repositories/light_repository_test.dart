@@ -101,6 +101,23 @@ void main() {
       expect(h.single.kelvin, 3000);
     });
 
+    test('an off bulb that still reports its lightness stays off', () async {
+      // Sengled bulbs answer OnOff Status "off", then a CTL Status with the
+      // lightness they will return to, not 0.
+      bulb
+        ..on = false
+        ..lightness = 65535;
+      await h.lights.queryState(0x10);
+      await settle();
+      expect(h.lights.stateOf(0x10).on, isFalse);
+      expect(h.single.level, 100, reason: 'the lightness still sets the level');
+
+      bulb.on = true;
+      await h.lights.queryState(0x10);
+      await settle();
+      expect(h.lights.stateOf(0x10).on, isTrue);
+    });
+
     test('power, presets, sliders and toggle all', () async {
       await h.lights.setPower(0x10, true);
       await settle();

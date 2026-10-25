@@ -29,7 +29,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    c.start();
+    // After the first frame: start() may notify at once (when the home is
+    // already loaded), and notifying during build is not allowed.
+    WidgetsBinding.instance.addPostFrameCallback((_) => c.start());
   }
 
   @override

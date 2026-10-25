@@ -103,15 +103,6 @@ int opcodeOf(List<int> a) {
   return (a[0] << 8) | a[1];
 }
 
-/// Length of the opcode at the start of [a].
-int opcodeLength(List<int> a) => a.isEmpty
-    ? 0
-    : a[0] & 0x80 == 0
-    ? 1
-    : a[0] & 0xC0 == 0xC0
-    ? 3
-    : 2;
-
 List<int> _op(int op) => op > 0xff ? [op >> 8, op & 0xff] : [op];
 
 /// Generic Default Transition Time encoding (steps + resolution).
@@ -180,7 +171,6 @@ abstract final class Msg {
   static List<int> lightnessLinearGet() => _op(Op.lightnessLinearGet);
   static List<int> lightnessLastGet() => _op(Op.lightnessLastGet);
   static List<int> lightnessDefaultGet() => _op(Op.lightnessDefaultGet);
-  static List<int> lightnessRangeGet() => _op(Op.lightnessRangeGet);
 
   // ---------- Light CTL ----------
 

@@ -1,3 +1,6 @@
+// Mesh Proxy advertisements (Network ID and Node Identity). The IdentityKey
+// is checked against the Bluetooth Mesh Profile sample data, section 8.2.6;
+// the rest round-trips adverts built by Luminar itself.
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';

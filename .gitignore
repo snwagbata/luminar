@@ -49,3 +49,11 @@ app.*.map.json
 
 # Lamplight handoff (not published)
 /reference/
+
+# Brainstorming companion mockups
+.superpowers/
+
+# Release signing: never commit the upload key or its passwords
+/android/key.properties
+*.jks
+*.keystore

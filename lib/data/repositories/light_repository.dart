@@ -74,9 +74,15 @@ class LightRepository extends ChangeNotifier {
     var level = l.level, kelvin = l.kelvin;
     final lightness = st.lightness;
     if (lightness != null) {
-      if (lightness > 0) level = (lightness / 65535 * 100).round().clamp(1, 100);
-      // Lightness 0 means off, whichever model reported it.
-      on = lightness > 0;
+      if (lightness > 0) {
+        level = (lightness / 65535 * 100).round().clamp(1, 100);
+      } else {
+        // Lightness 0 means off, whichever model reported it.
+        on = false;
+      }
+      // A nonzero lightness does not mean on: Sengled bulbs that are off
+      // still report the lightness they will return to. Generic OnOff
+      // Status decides.
     }
     final k = st.kelvin;
     if (k != null && k >= 800 && k <= 20000) kelvin = k.clamp(minKelvin, maxKelvin);
@@ -411,11 +417,6 @@ class LightRepository extends ChangeNotifier {
       Op.ctlDefaultStatus,
     );
     return r == null ? null : CtlDefault.parse(r);
-  }
-
-  Future<RangeStatus?> lightnessRange(int addr) async {
-    final r = await _proxy.request(addr, Msg.lightnessRangeGet(), Op.lightnessRangeStatus);
-    return r == null ? null : RangeStatus.parse(r, Op.lightnessRangeStatus);
   }
 
   /// Schedule slots (0–15) in use on the light.

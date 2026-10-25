@@ -1,5 +1,7 @@
 // Network PDUs for access messages, cross-checked against Silvair's
-// bluetooth-mesh Python library (0.9.3). Vectors: test/support/silvair_vectors.json.
+// bluetooth-mesh Python library (0.9.3). The vectors in
+// test/support/silvair_vectors.json were generated once with that library;
+// the generator script wasn't kept.
 import 'dart:convert';
 import 'dart:io';
 
